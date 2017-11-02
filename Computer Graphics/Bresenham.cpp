@@ -28,19 +28,20 @@ void Bresenham::line(int x1, int y1, int x2, int y2)
 void Bresenham::circle(int xc, int yc, int r)
 {
 	int x = 0, y = r;
-	int e = 0;
+	int p = 0;
 
 	setpt(xc, yc, x, y);
-	while (x != y) {
-		if (e + 2 * x < y) {
-			x++;
-			e += 2 * x;
-			setpt(xc, yc, x, y);
-		}
-		else {
+	while (x < y) {
+		x++;
+		if (p < 0) 
+		{
+			p += 2 * x + 3;
+		}else 
+		{
 			y--;
-			e -= 2 * y;
+			p += 2 * (x - y ) + 5;
 		}
+		setpt(xc, yc, x, y);
 	}
 }
 

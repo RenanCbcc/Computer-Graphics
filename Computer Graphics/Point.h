@@ -13,4 +13,5 @@ public:
 private:
 	int x, y;
 	float r, g, b;
+
 };
