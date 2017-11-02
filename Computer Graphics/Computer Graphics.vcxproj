@@ -123,6 +123,9 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Point.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Dropbox\Capturas de tela\print.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

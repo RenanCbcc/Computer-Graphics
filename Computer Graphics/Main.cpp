@@ -2,12 +2,21 @@
 #include "Bresenham.h"
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+struct Colour {
+	GLfloat   r;
+	GLfloat   g;
+	GLfloat   b;
+};
+
 void init();
 void drawLine();
 void drawCircle();
 void drawPoly();
 void example();
 void floodFill(GLint x, GLint y, Colour oldColor, Colour newColor);
+void onMouseClick(int button, int state, int x, int y);
+void setPixelColour(GLint x, GLint y, Colour colour);
+Colour getPixelColour(GLint x, GLint y);
 
 int main(int argc, char** argv)
 {
@@ -29,11 +38,11 @@ void init() {
 	other necessaries viewing parameters with the following two functions:
 	OBS: Search for Orthogonal projection.
 	*/
-	glColor3f(1.0, 1.0, 1.0); // Set the object colour;
-	glClearColor(0.0, 0.0, 0.0, 0.0);// Set the background colour;
+	glColor3f(0.0, 0.0, 0.0); // Set the object colour;
+	glClearColor(1.0, 1.0, 1.0,1.0);// Set the background colour;
 	glMatrixMode(GL_PROJECTION); // Projection matrix defines the properties of the camera that views the objects in the world coordinate frame.
 	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1); // Essentially set coordinate system, anything outside this coordenate range will not be displayed.
-	glPointSize(5);
+	glPointSize(1);
 }
 
 void drawLine() {
@@ -63,7 +72,7 @@ void drawCircle() {
 }
 
 void drawPoly() {
-
+	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_LINES);
 	// l1
 	glVertex2i(150, 200);
@@ -140,16 +149,11 @@ void setPixelColour(GLint x, GLint y, Colour colour) {
 	glEnd();
 	glFlush();
 }
-struct Colour {
-	GLubyte  r;
-	GLubyte  g;
-	GLubyte  b;
-};
 
 void onMouseClick(int button, int state, int x, int y)
 {
-	Colour newColour = { 1.0f, 0.0f, 0.0f };
+	Colour newColour = { 0.0f, 1.0f, 0.0f };
 	Colour oldColour = { 1.0f, 1.0f, 1.0f };
-
+	y = glutGet(GLUT_WINDOW_HEIGHT) - y;
 	floodFill(x, y, oldColour, newColour);
 }
