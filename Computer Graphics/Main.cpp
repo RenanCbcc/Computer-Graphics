@@ -7,7 +7,7 @@ void drawLine();
 void drawCircle();
 void drawPoly();
 void example();
-void floodfill();
+void floodFill(GLint x, GLint y, Colour oldColor, Colour newColor);
 
 int main(int argc, char** argv)
 {
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	//glutDisplayFunc(drawLine);
 	//glutDisplayFunc(drawCircle);
 	glutDisplayFunc(drawPoly);
-
+	glutMouseFunc(onMouseClick);
 	glutMainLoop();
 }
 
@@ -110,6 +110,46 @@ void example() {
 
 }
 
-void floodfill() {
+void floodFill(GLint x, GLint y, Colour oldColour, Colour newColour) {
+
+	Colour colour;
+	colour = getPixelColour(x, y);
+
+	if (colour.r == oldColour.r && colour.g == oldColour.g && colour.b == oldColour.b)
+	{
+		setPixelColour(x, y, newColour);
+		floodFill(x + 1, y, oldColour, newColour);
+		floodFill(x, y + 1, oldColour, newColour);
+		floodFill(x - 1, y, oldColour, newColour);
+		floodFill(x, y - 1, oldColour, newColour);
+	}
+	return;
 }
 
+//this function is used for getting color of pixel
+Colour getPixelColour(GLint x, GLint y) {
+	Colour colour;
+	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, &colour);
+	return colour;
+}
+
+void setPixelColour(GLint x, GLint y, Colour colour) {
+	glColor3f(colour.r, colour.g, colour.b);
+	glBegin(GL_POINTS);
+	glVertex2i(x, y);
+	glEnd();
+	glFlush();
+}
+struct Colour {
+	GLubyte  r;
+	GLubyte  g;
+	GLubyte  b;
+};
+
+void onMouseClick(int button, int state, int x, int y)
+{
+	Colour newColour = { 1.0f, 0.0f, 0.0f };
+	Colour oldColour = { 1.0f, 1.0f, 1.0f };
+
+	floodFill(x, y, oldColour, newColour);
+}
