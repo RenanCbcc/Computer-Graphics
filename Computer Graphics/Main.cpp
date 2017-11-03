@@ -138,7 +138,6 @@ void floodFill(GLint x, GLint y, Colour colour, Colour edgeColor) {
 	return;
 }
 
-//this function is used for getting color of pixel
 Colour getPixelColour(GLint x, GLint y) {
 	Colour colour;
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, &colour);
