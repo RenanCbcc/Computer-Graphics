@@ -6,6 +6,10 @@ struct Colour {
 	GLfloat   r;
 	GLfloat   g;
 	GLfloat   b;
+
+	bool operator!=(const Colour& colour) const {
+		return ((colour.r != this->r) || (colour.g != this->g) || (colour.b != this->b));
+	}
 };
 
 void init();
@@ -27,8 +31,8 @@ int main(int argc, char** argv)
 	init();
 	//glutDisplayFunc(example);
 	//glutDisplayFunc(drawLine);
-	//glutDisplayFunc(drawCircle);
-	glutDisplayFunc(drawPoly);
+	glutDisplayFunc(drawCircle);
+	//glutDisplayFunc(drawPoly);
 	glutMouseFunc(onMouseClick);
 	glutMainLoop();
 }
@@ -38,8 +42,8 @@ void init() {
 	other necessaries viewing parameters with the following two functions:
 	OBS: Search for Orthogonal projection.
 	*/
-	glColor3f(0.0, 0.0, 0.0); // Set the object colour;
-	glClearColor(1.0, 1.0, 1.0,1.0);// Set the background colour;
+	glColor3f(0.0f, 0.0f, 0.0f); // Set the object colour;
+	glClearColor(1.0f, 1.0f, 1.0f,1.0f);// Set the background colour;
 	glMatrixMode(GL_PROJECTION); // Projection matrix defines the properties of the camera that views the objects in the world coordinate frame.
 	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1); // Essentially set coordinate system, anything outside this coordenate range will not be displayed.
 	glPointSize(1);
@@ -60,7 +64,7 @@ void drawLine() {
 
 void drawCircle() {
 	Bresenham bresh(SCREEN_WIDTH, SCREEN_HEIGHT);
-	bresh.circle(300, 300, 100);
+	bresh.circle(300, 300, 30);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
 	for (int i = 0; i < bresh.point.size(); i++) {
@@ -70,7 +74,6 @@ void drawCircle() {
 	glFlush();
 
 }
-
 void drawPoly() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_LINES);
@@ -119,19 +122,19 @@ void example() {
 
 }
 
-void floodFill(GLint x, GLint y, Colour oldColour, Colour newColour) {
+void floodFill(GLint x, GLint y, Colour colour, Colour edgeColor) {
 
-	Colour colour;
-	colour = getPixelColour(x, y);
+	Colour current = getPixelColour(x, y);
 
-	if (colour.r == oldColour.r && colour.g == oldColour.g && colour.b == oldColour.b)
+	if (current != edgeColor && current != colour)
 	{
-		setPixelColour(x, y, newColour);
-		floodFill(x + 1, y, oldColour, newColour);
-		floodFill(x, y + 1, oldColour, newColour);
-		floodFill(x - 1, y, oldColour, newColour);
-		floodFill(x, y - 1, oldColour, newColour);
-	}
+				setPixelColour(x, y, colour);
+				floodFill(x + 1, y, colour, edgeColor);
+				floodFill(x, y + 1, colour, edgeColor);
+				floodFill(x - 1, y, colour, edgeColor);
+				floodFill(x, y - 1, colour, edgeColor);
+	
+	}	
 	return;
 }
 
@@ -152,8 +155,8 @@ void setPixelColour(GLint x, GLint y, Colour colour) {
 
 void onMouseClick(int button, int state, int x, int y)
 {
+	Colour edgeColor = { 0.0f, 0.0f, 0.0f };
 	Colour newColour = { 0.0f, 1.0f, 0.0f };
-	Colour oldColour = { 1.0f, 1.0f, 1.0f };
 	y = glutGet(GLUT_WINDOW_HEIGHT) - y;
-	floodFill(x, y, oldColour, newColour);
+	floodFill(x, y, newColour, edgeColor);
 }

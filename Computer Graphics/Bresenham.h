@@ -11,8 +11,7 @@ public:
 	void circle(int, int, int);
 	vector<Point> point;
 private:
-	void paint(int, int, float, float, float);
+	void paint(int, int);
 	void setpt(int, int, int, int);
 	int max, min;
 };
-

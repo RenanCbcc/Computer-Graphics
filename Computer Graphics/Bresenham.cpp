@@ -11,12 +11,12 @@ void Bresenham::line(int x1, int y1, int x2, int y2)
 	int dx = x2 - x1, dy = y2 - y1;
 	int e = 0;
 
-	paint(x1, y1, 1.0, 0.0, 0.0);
+	paint(x1, y1);
 	while (x1 <= x2) {
 		if (e + 2 * dy<dx) {
 			x1++;
 			e += 2 * dy;
-			paint(x1, y1, 1.0, 0.0, 0.0);
+			paint(x1, y1);
 		}
 		else {
 			y1++;
@@ -33,34 +33,35 @@ void Bresenham::circle(int xc, int yc, int r)
 	setpt(xc, yc, x, y);
 	while (x < y) {
 		x++;
-		if (p < 0) 
+		if (p < 0)
 		{
 			p += 2 * x + 3;
-		}else 
+		}
+		else
 		{
 			y--;
-			p += 2 * (x - y ) + 5;
+			p += 2 * (x - y) + 5;
 		}
 		setpt(xc, yc, x, y);
 	}
 }
 
-void Bresenham::paint(int x, int y, float r, float g, float b) {
-	point.push_back(Point(x, y, r, g, b));
+void Bresenham::paint(int x, int y) {
+	point.push_back(Point(x, y));
 }
 
 void Bresenham::setpt(int xc, int yc, int x, int y)
 {
 	if ((x == 0) && (y == 0)) {
-		paint(xc, yc, 0.0, 1.0, 0.0);
+		paint(xc, yc);
 		return;
 	}
-	paint((xc + x), (yc + y), 0.0, 1.0, 0.0);
-	paint((xc + x), (yc - y), 0.0, 1.0, 0.0);
-	paint((xc - x), (yc - y), 0.0, 1.0, 0.0);
-	paint((xc - x), (yc + y), 0.0, 1.0, 0.0);
-	paint((xc + y), (yc + x), 0.0, 1.0, 0.0);
-	paint((xc + y), (yc - x), 0.0, 1.0, 0.0);
-	paint((xc - y), (yc + x), 0.0, 1.0, 0.0);
-	paint((xc - y), (yc - x), 0.0, 1.0, 0.0);
+	paint((xc + x), (yc + y));
+	paint((xc + x), (yc - y));
+	paint((xc - x), (yc - y));
+	paint((xc - x), (yc + y));
+	paint((xc + y), (yc + x));
+	paint((xc + y), (yc - x));
+	paint((xc - y), (yc + x));
+	paint((xc - y), (yc - x));
 }

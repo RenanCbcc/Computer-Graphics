@@ -2,12 +2,10 @@
 
 using namespace std;
 
-Point::Point(int x, int y, float r, float g, float b) {
+Point::Point(int x, int y) {
 	this->x = x;
 	this->y = y;
-	this->r = r;
-	this->g = g;
-	this->b = b;
+	
 }
 
 int Point::getXcoodinate()
