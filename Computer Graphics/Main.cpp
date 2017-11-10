@@ -35,6 +35,7 @@ int main(int argc, char** argv)
 	//glutDisplayFunc(drawPoly);
 	glutMouseFunc(onMouseClick);
 	glutMainLoop();
+	return 0;
 }
 
 void init() {
@@ -50,55 +51,54 @@ void init() {
 }
 
 void drawLine() {
-	Bresenham bresh(SCREEN_WIDTH, SCREEN_HEIGHT);
-	bresh.line(0, 0, 200, 300);
+	Bresenham bresenham(SCREEN_WIDTH, SCREEN_HEIGHT);
+	bresenham.line(0, 0, 200, 300);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
-	for (int i = 0; i < bresh.point.size(); i++) {
-		glVertex2i(bresh.point[i].getXcoodinate(), bresh.point[i].getYcoodinate());
+	for (int x = 0; x< bresenham.buffer.size(); x++) {
+		for (int y = 0; y< bresenham.buffer[x].size(); y++)
+		{
+			if (bresenham.buffer[x][y] != 0)
+				glVertex2i(x, y);
+		}
 	}
+
 	glEnd();
 	glFlush();
 
 }
 
 void drawCircle() {
-	Bresenham bresh(SCREEN_WIDTH, SCREEN_HEIGHT);
-	bresh.circle(300, 300, 30);
+	Bresenham bresenham(SCREEN_WIDTH, SCREEN_HEIGHT);
+	bresenham.circle(300, 300, 30);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
-	for (int i = 0; i < bresh.point.size(); i++) {
-		glVertex2i(bresh.point[i].getXcoodinate(), bresh.point[i].getYcoodinate());
+
+	for (int x = 0; x< bresenham.buffer.size(); x++) {
+		for (int y = 0; y< bresenham.buffer[x].size(); y++)
+		{
+			if (bresenham.buffer[x][y] != 0)
+			glVertex2i(x,y);
+		}
 	}
+	
 	glEnd();
 	glFlush();
 
 }
 void drawPoly() {
+	Bresenham bresenham(SCREEN_WIDTH, SCREEN_HEIGHT);
+	bresenham.polygon();
+
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_LINES);
-	// l1
-	glVertex2i(150, 200);
-	glVertex2i(100, 300);
-	// l2
-	glVertex2i(150, 200);
-	glVertex2i(300, 200);
-
-	// l3
-	glVertex2i(300, 200);
-	glVertex2i(350, 300);
-
-	// l3
-	glVertex2i(100, 300);
-	glVertex2i(350, 300);
-
-	// l5
-	glVertex2i(200, 300);
-	glVertex2i(250, 350);
-
-	// l6
-	glVertex2i(250, 350);
-	glVertex2i(350, 300);
+	for (int x = 0; x< bresenham.buffer.size(); x++) {
+		for (int y = 0; y< bresenham.buffer[x].size(); y++)
+		{
+			if (bresenham.buffer[x][y] != 0)
+				glVertex2i(x, y);
+		}
+	}
 
 	glEnd();
 	glFlush();
