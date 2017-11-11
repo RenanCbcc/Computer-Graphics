@@ -1,37 +1,29 @@
 #include <gl/glut.h>
+#include "Colour.h"
+
 #include "Bresenham.h"
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-struct Colour {
-	GLfloat   r;
-	GLfloat   g;
-	GLfloat   b;
-
-	bool operator!=(const Colour& colour) const {
-		return ((colour.r != this->r) || (colour.g != this->g) || (colour.b != this->b));
-	}
-};
 
 void init();
 void drawLine();
 void drawCircle();
+void drawSquare();
 void drawPoly();
-void example();
 void floodFill(GLint x, GLint y, Colour oldColor, Colour newColor);
 void onMouseClick(int button, int state, int x, int y);
 void setPixelColour(GLint x, GLint y, Colour colour);
 Colour getPixelColour(GLint x, GLint y);
 
-int main(int argc, char** argv)
+int nain(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("Bresenham's Tribute");
 	init();
-	//glutDisplayFunc(example);
 	//glutDisplayFunc(drawLine);
-	glutDisplayFunc(drawCircle);
+	//glutDisplayFunc(drawCircle);
 	//glutDisplayFunc(drawPoly);
 	glutMouseFunc(onMouseClick);
 	glutMainLoop();
@@ -101,23 +93,6 @@ void drawPoly() {
 	}
 
 	glEnd();
-	glFlush();
-
-}
-
-void example() {
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glBegin(GL_POINTS);
-	glVertex2i(50, 100);
-	glVertex2i(75, 150);
-	glVertex2i(100, 200);
-	glVertex2i(150, 280);
-	glVertex2i(200, 340);
-	glVertex2i(250, 390);
-	glVertex2i(300, 460);
-	glEnd();
-
 	glFlush();
 
 }

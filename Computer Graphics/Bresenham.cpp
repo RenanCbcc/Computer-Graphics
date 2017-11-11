@@ -45,6 +45,16 @@ void Bresenham::circle(int xc, int yc, int r)
 	}
 }
 
+void Bresenham::square()
+{
+	//This pois will represent the limits of my imagnary screen.
+	buffer[xmin][ymin] = 1;
+	buffer[xmax][ymin] = 1;
+	buffer[xmax][ymax] = 1;
+	buffer[xmin][ymax] = 1;
+
+}
+
 void Bresenham::polygon()
 {
 	buffer[150][200] = 1;
