@@ -8,7 +8,6 @@
 void init();
 void drawLine();
 void drawCircle();
-void drawSquare();
 void drawPoly();
 void floodFill(GLint x, GLint y, Colour oldColor, Colour newColor);
 void onMouseClick(int button, int state, int x, int y);
@@ -23,7 +22,7 @@ int nain(int argc, char** argv)
 	glutCreateWindow("Bresenham's Tribute");
 	init();
 	//glutDisplayFunc(drawLine);
-	//glutDisplayFunc(drawCircle);
+	glutDisplayFunc(drawCircle);
 	//glutDisplayFunc(drawPoly);
 	glutMouseFunc(onMouseClick);
 	glutMainLoop();
